@@ -48,7 +48,7 @@ class Size(Enum):
 
 class Category(Enum):
     """Enumeration of valid Product Categories"""
-    CLOTHING = "clothing"
+    FASHION = "fashion"
     ACCESSORIES = "accessories"
     GROCERIES = "groceries"
     DRUGS = "drugs"
@@ -66,10 +66,10 @@ class Product(db.Model):
     Class that represents a YourResourceModel
     """
 
-
     ##################################################
     # Table Schema
     ##################################################
+    
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(63), nullable=False)
     available = db.Column(db.Boolean(), nullable=False, default=False)

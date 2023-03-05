@@ -19,20 +19,22 @@ from datetime import date
 
 import factory
 from factory.fuzzy import FuzzyChoice, FuzzyDate
-from service.models import Pet, Gender
+from service.models import Product, Color, Size, Category
 
 
-class PetFactory(factory.Factory):
+class ProductFactory(factory.Factory):
     """Creates fake pets that you don't have to feed"""
 
     class Meta:  # pylint: disable=too-few-public-methods
         """Maps factory to data model"""
 
-        model = Pet
+        model = Product
 
     id = factory.Sequence(lambda n: n)
-    name = factory.Faker("first_name")
-    category = FuzzyChoice(choices=["dog", "cat", "bird", "fish"])
+    name = factory.Faker("Louis Vuitton")
+    category = FuzzyChoice(choices=[Category.ACCESSORIES, Category.BEAUTY, Category.FASHION, Category.GROCERIES])
     available = FuzzyChoice(choices=[True, False])
-    gender = FuzzyChoice(choices=[Gender.MALE, Gender.FEMALE, Gender.UNKNOWN])
-    birthday = FuzzyDate(date(2008, 1, 1))
+    color = FuzzyChoice(choices=[Color.BLACK, Color.GREEN, Color.PINK, Color.BLUE])
+    size = FuzzyChoice(choices=[Size.XS, Size.S, Size.M, Size.L, Size.XL])
+    create_date = FuzzyDate(date(2008, 1, 1))
+    create_date = FuzzyDate(date(2009, 2, 2))
