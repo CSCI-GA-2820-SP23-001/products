@@ -9,43 +9,28 @@ import os
 import logging
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
-
 from service import app
-from service.models import db, init_db
+from service.models import db
 from service.common import status  # HTTP Status Codes
 
-
-DATABASE_URI = os.getenv(
-    "DATABASE_URI", "postgresql://postgres:postgres@localhost:5432/testdb"
-)
-BASE_URL = "/products"
 
 ######################################################################
 #  T E S T   C A S E S
 ######################################################################
-class TestProductServer(TestCase):
+class TestYourResourceServer(TestCase):
     """ REST API Server Tests """
 
     @classmethod
     def setUpClass(cls):
         """ This runs once before the entire test suite """
-        app.config["TESTING"] = True
-        app.config["DEBUG"] = False
-        # Set up the test database
-        app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
-        app.logger.setLevel(logging.CRITICAL)
-        init_db(app)
 
     @classmethod
     def tearDownClass(cls):
         """ This runs once after the entire test suite """
-        db.session.close()
 
     def setUp(self):
         """ This runs before each test """
-        self.client = app.test_client()
-        db.session.query(Pet).delete()  # clean up the last tests
-        db.session.commit()
+        self.app = app.test_client()
 
     def tearDown(self):
         """ This runs after each test """
