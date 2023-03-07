@@ -89,14 +89,7 @@ class Product(db.Model):
     def __repr__(self):
         return f"<Product {self.name} id=[{self.id}]>"
 
-    def create(self):
-        """
-        Creates a Product to the database
-        """
-        logger.info("Creating %s", self.name)
-        self.id = None  # pylint: disable=invalid-name
-        db.session.add(self)
-        db.session.commit()
+    
 
     def update(self):
         """
