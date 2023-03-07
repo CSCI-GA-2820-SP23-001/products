@@ -19,7 +19,7 @@ DATABASE_URI = os.getenv(
 #  PRODUCT   M O D E L   T E S T   C A S E S
 ######################################################################
 class TestProductModel(unittest.TestCase):
-    """ Test Cases for YourResourceModel Model """
+    """ Test Cases for ProductModel Model """
 
     @classmethod
     def setUpClass(cls):
@@ -55,8 +55,7 @@ class TestProductModel(unittest.TestCase):
     #def __repr__(self):
     #    return f"<Product {self.name} id=[{self.id}]>"
 
-    @classmethod
-    def create(self):
+    def test_create_product(self):
         """It should Create a product and assert that it exists"""
         product = Product(name="WATCH", category="ACCESSORIES", size="L", color="GREEN")
         self.assertEqual(str(product), "<Product WATCH id=[None]>")
