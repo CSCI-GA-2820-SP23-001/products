@@ -64,3 +64,16 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(product.name, "WATCH")
         self.assertEqual(product.category, "ACCESSORIES")
         self.assertEqual(product.size, "L")
+
+    def test_add_a_product(self):
+        """It should Create a product and add it to the database"""
+        products = Product.all()
+        self.assertEqual(products, [])
+        product = Product(name="WATCH", category="ACCESSORIES", size="L", color="GREEN")
+        self.assertTrue(product is not None)
+        self.assertEqual(product.id, None)
+        product.create()
+        # Assert that it was assigned an id and shows up in the database
+        self.assertIsNotNone(product.id)
+        products = Product.all()
+        self.assertEqual(len(products), 1)
