@@ -11,7 +11,7 @@ from unittest import TestCase
 from unittest.mock import MagicMock, patch
 
 from service import app
-from service.models import db, init_db
+from service.models import db, init_db, Product #added Product
 from service.common import status  # HTTP Status Codes
 
 
@@ -44,7 +44,7 @@ class TestProductServer(TestCase):
     def setUp(self):
         """ This runs before each test """
         self.client = app.test_client()
-        db.session.query(Pet).delete()  # clean up the last tests
+        db.session.query(Product).delete()  # clean up the last tests
         db.session.commit()
 
     def tearDown(self):
@@ -56,5 +56,5 @@ class TestProductServer(TestCase):
 
     def test_index(self):
         """ It should call the home page """
-        resp = self.app.get("/")
+        resp = self.client.get("/")
         self.assertEqual(resp.status_code, status.HTTP_200_OK)

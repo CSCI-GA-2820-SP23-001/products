@@ -94,6 +94,7 @@ class Product(db.Model):
         Creates a Product to the database
         """
         logger.info("Creating %s", self.name)
+        # id must be none to generate next primary key
         self.id = None  # pylint: disable=invalid-name
         db.session.add(self)
         db.session.commit()
