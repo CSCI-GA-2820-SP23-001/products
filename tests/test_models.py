@@ -77,3 +77,16 @@ class TestProductModel(unittest.TestCase):
         self.assertIsNotNone(product.id)
         products = Product.all()
         self.assertEqual(len(products), 1)
+
+    def test_list_all_products(self):
+        """It should List all Products in the database"""
+        products = Product.all()
+        self.assertEqual(products, [])
+        # Create 5 Pets
+        for _ in range(5):
+            product = ProductFactory()
+            product.create()
+        # See if we get back 5 pets
+        products = Product.all()
+        self.assertEqual(len(products), 5)
+        
