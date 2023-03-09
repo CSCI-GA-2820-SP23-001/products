@@ -23,7 +23,7 @@ from service.models import Product, Color, Size, Category
 
 
 class ProductFactory(factory.Factory):
-    """Creates fake pets that you don't have to feed"""
+    """Creates fake products that you don't have to feed"""
 
     class Meta:  # pylint: disable=too-few-public-methods
         """Maps factory to data model"""
@@ -31,10 +31,12 @@ class ProductFactory(factory.Factory):
         model = Product
 
     id = factory.Sequence(lambda n: n)
-    name = factory.Faker("Louis Vuitton")
+    #Alternative for name:
+    name = FuzzyChoice(choices=["Orange Juice", "Milk", "Carrot", "Ice Cream"])
+    #name = factory.Faker("first_name")
     category = FuzzyChoice(choices=[Category.ACCESSORIES, Category.BEAUTY, Category.FASHION, Category.GROCERIES])
     available = FuzzyChoice(choices=[True, False])
     color = FuzzyChoice(choices=[Color.BLACK, Color.GREEN, Color.PINK, Color.BLUE])
     size = FuzzyChoice(choices=[Size.XS, Size.S, Size.M, Size.L, Size.XL])
-    create_date = FuzzyDate(date(2008, 1, 1))
-    create_date = FuzzyDate(date(2009, 2, 2))
+    #create_date = FuzzyDate(date(2008, 1, 1))
+    #create_date = FuzzyDate(date(2009, 2, 2))
