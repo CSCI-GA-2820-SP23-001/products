@@ -32,12 +32,12 @@ def index():
 
 
 ######################################################################
-# RETRIEVE A PRODUCT
+# READ A PRODUCT
 ######################################################################
 @app.route("/products/<int:produc_id>", methods=["GET"])
 def get_products(product_id):
     """
-    Retrieve a single Product
+    Read a single Product
 
     This endpoint will return a Product based on it's id
     """
