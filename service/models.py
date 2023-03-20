@@ -3,6 +3,23 @@ Models for YourResourceModel
 
 All of the models are stored in this module
 """
+
+
+"""    
+    {
+        "id":
+        "name": 
+        "available": 
+        "category":
+        "color": 
+        "size": 
+        "create_date": 
+        "last_modify_date": 
+    }
+    
+"""
+
+
 import logging
 from enum import Enum
 from datetime import date
