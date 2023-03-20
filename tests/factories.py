@@ -23,7 +23,7 @@ from service.models import Product, Color, Size, Category
 
 
 class ProductFactory(factory.Factory):
-    """Creates fake pets that you don't have to feed"""
+    """Creates fake products that you don't have to feed"""
 
     class Meta:  # pylint: disable=too-few-public-methods
         """Maps factory to data model"""
@@ -38,3 +38,4 @@ class ProductFactory(factory.Factory):
     size = FuzzyChoice(choices=[Size.XS, Size.S, Size.M, Size.L, Size.XL])
     create_date = FuzzyDate(date(2008, 1, 1))
     create_date = FuzzyDate(date(2009, 2, 2))
+

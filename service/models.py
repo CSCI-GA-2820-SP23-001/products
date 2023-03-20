@@ -82,8 +82,10 @@ class Product(db.Model):
     size = db.Column(
         db.Enum(Size), nullable=False, server_default=(Size.UNKNOWN.name)
     )
-    create_date = db.Column(db.Date(), nullable=False, default=date.today())
-    last_modify_date = db.Column(db.Date(), nullable=False, default=date.today())
+    create_date = db.Column(db.Date(), nullable=False, default = date.today())
+    last_modify_date = db.Column(db.Date(), nullable=False, default = date.today())
+
+    
 
 
     def __repr__(self):
@@ -133,7 +135,7 @@ class Product(db.Model):
         """
         try:
             self.name = data["name"]
-            self.category = data["category"]
+            #self.category = data["category"]
             if isinstance(data["available"], bool):
                 self.available = data["available"]
             else:
