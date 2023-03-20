@@ -92,10 +92,9 @@ class Product(db.Model):
         return f"<Product {self.name} id=[{self.id}]>"
 
     def create(self):
-        """
-        Creates a Product to the database
-        """
+        """ Creates a Product to the database """
         logger.info("Creating %s", self.name)
+        # id must be none to generate next primary key
         self.id = None  # pylint: disable=invalid-name
         db.session.add(self)
         db.session.commit()

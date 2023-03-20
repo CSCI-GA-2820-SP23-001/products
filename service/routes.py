@@ -124,3 +124,31 @@ def check_content_type(content_type):
         status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
         f"Content-Type must be {content_type}",
     )
+######################################################################
+# LIST ALL PRODUCTS
+######################################################################
+
+@app.route("/products", methods=["GET"])
+def list_products():
+    """Returns all of the Products"""
+    app.logger.info("Request for products list")
+    products = []
+    name = request.args.get("name")
+    category = request.args.get("category")
+    size = request.args.get("size")
+    color = request.args.get("color")
+
+    if name:
+        products = Product.find_by_name(name)
+    elif category:
+        products = Product.find_by_category(category)
+    elif size:
+        products = Product.find_by_size(size)
+    elif color:
+        products = Product.find_by_color(color)
+    else:
+        products = Product.all()
+
+    results = [Product.serialize() for product in products]
+    app.logger.info("Returning %d products", len(results))
+    return jsonify(results), status.HTTP_200_OKgit chec
