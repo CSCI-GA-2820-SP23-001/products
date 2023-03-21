@@ -242,7 +242,7 @@ class Product(db.Model):
         logger.info("Processing available query for %s ...", available)
         return cls.query.filter(cls.available == available)
 
-    
+       
     @classmethod
     def find_by_create_date(cls, create_date: str) -> list:
         """Returns all Products by their create date
@@ -271,7 +271,7 @@ class Product(db.Model):
     def find_by_color(cls, color: Color = Color.UNKNOWN) -> list:
         """Returns all Products by their Color
 
-        :param color: values are ['red', 'yello', 'green', ...]
+        :param color: values are ['red', 'yellow', 'green', ...]
         :type available: enum
 
         :return: a collection of Products that are available
