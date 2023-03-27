@@ -105,20 +105,38 @@ def delete_products(product_id):
 ######################################################################
 # LIST ALL PRODUCTS
 ######################################################################
+# @app.route("/products", methods=["GET"])
+# def list_products():
+#     """
+#     Lists all products.
+#     This endpoint will list all the products.
+#     """
+#     app.logger.info("Request to list all products.")
+#     products = Product.all()
+#     results = [product.serialize() for product in products]
+#     app.logger.info(f"Returning {len(results)} products.")
+#     response = jsonify(results), status.HTTP_200_OK
+#     return response
+
+
+# Querying list 
 @app.route("/products", methods=["GET"])
 def list_products():
-    """
-    Lists all products.
-    This endpoint will list all the products.
-    """
-    app.logger.info("Request to list all products.")
-    products = Product.all()
+    """Returns all of the Products"""
+    app.logger.info("Request for product list")
+    products = []
+    category = request.args.get("category")
+    name = request.args.get("name")
+    if category:
+        products = Product.find_by_category(category)
+    elif name:
+        products = Product.find_by_name(name)
+    else:
+        products = Product.all()
+
     results = [product.serialize() for product in products]
-    app.logger.info(f"Returning {len(results)} products.")
-    response = jsonify(results), status.HTTP_200_OK
-    return response
-
-
+    app.logger.info("Returning %d products", len(results))
+    return jsonify(results), status.HTTP_200_OK
 
 ######################################################################
 # UPDATE A PRODUCT
