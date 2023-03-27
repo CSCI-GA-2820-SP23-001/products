@@ -188,7 +188,7 @@ class TestProductServer(TestCase):
         # check the data just to be sure
         for product in data:
             self.assertEqual(product["category"], test_category)
-
+ 
 ######################################################################
 #  T E S T   S A D   P A T H S
 ######################################################################
@@ -202,7 +202,7 @@ class TestProductServer(TestCase):
         """It should not Create a Product with no content type"""
         response = self.client.post(BASE_URL)
         self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
-
+  
     def test_create_product_wrong_content_type(self):
         """It should not Create a Product with the wrong content type"""
         response = self.client.post(BASE_URL, data="hello", content_type="text/html")
@@ -227,6 +227,10 @@ class TestProductServer(TestCase):
         response = self.client.post(BASE_URL, json=test_product)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
     
+
+
+
+#tryingtocommit
 
 
 
