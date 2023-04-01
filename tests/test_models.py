@@ -7,7 +7,7 @@ import logging
 import unittest
 from datetime import date
 from werkzeug.exceptions import NotFound
-from service.models import Product, Color, Size, Category, DataValidationError, db
+from service.models import Product, DataValidationError, db
 from service import app
 from tests.factories import ProductFactory
 
@@ -15,15 +15,16 @@ DATABASE_URI = os.getenv(
     "DATABASE_URI", "postgresql://postgres:postgres@localhost:5432/testdb"
 )
 
+
 ######################################################################
 #  PRODUCT   M O D E L   T E S T   C A S E S
 ######################################################################
 class TestProductModel(unittest.TestCase):
-    """ Test Cases for ProductModel Model """
+    """Test Cases for ProductModel Model"""
 
     @classmethod
     def setUpClass(cls):
-        """ This runs once before the entire test suite """
+        """This runs once before the entire test suite"""
         app.config["TESTING"] = True
         app.config["DEBUG"] = False
         app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
@@ -32,27 +33,27 @@ class TestProductModel(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        """ This runs once after the entire test suite """
+        """This runs once after the entire test suite"""
         db.session.close()
 
     def setUp(self):
-        """ This runs before each test """
+        """This runs before each test"""
         db.session.query(Product).delete()  # clean up the last tests
         db.session.commit()
 
     def tearDown(self):
-        """ This runs after each test """
+        """This runs after each test"""
         db.session.remove()
 
     ######################################################################
     #  T E S T   C A S E S
     ######################################################################
 
-    #def test_example_replace_this(self):
+    # def test_example_replace_this(self):
     #   """ It should always be true """
     #    self.assertTrue(True)
 
-    #def __repr__(self):
+    # def __repr__(self):
     #    return f"<Product {self.name} id=[{self.id}]>"
 
     def test_create_product(self):
@@ -90,7 +91,6 @@ class TestProductModel(unittest.TestCase):
         products = Product.all()
         self.assertEqual(len(products), 5)
 
-    
     def test_serialize_a_product(self):
         """It should serialize a Product"""
         product = ProductFactory()
@@ -111,8 +111,9 @@ class TestProductModel(unittest.TestCase):
         self.assertIn("create_date", data)
         self.assertEqual(date.fromisoformat(data["create_date"]), product.create_date)
         self.assertIn("last_modify_date", data)
-        self.assertEqual(date.fromisoformat(data["last_modify_date"]), product.last_modify_date)
-    
+        self.assertEqual(
+            date.fromisoformat(data["last_modify_date"]), product.last_modify_date
+        )
 
     def test_deserialize_a_product(self):
         """It should de-serialize a Product"""
@@ -126,15 +127,15 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(product.category.name, data["category"])
         self.assertEqual(product.size.name, data["size"])
         self.assertEqual(product.create_date, date.fromisoformat(data["create_date"]))
-        self.assertEqual(product.last_modify_date, date.fromisoformat(data["last_modify_date"]))
+        self.assertEqual(
+            product.last_modify_date, date.fromisoformat(data["last_modify_date"])
+        )
 
-    
     def test_deserialize_missing_data(self):
         """It should not deserialize a Product with missing data"""
         data = {"id": 1, "name": "cheese", "category": "GROCERIES"}
         product = Product()
         self.assertRaises(DataValidationError, product.deserialize, data)
-
 
     def test_deserialize_bad_data(self):
         """It should not deserialize bad data"""
@@ -142,7 +143,6 @@ class TestProductModel(unittest.TestCase):
         product = Product()
         self.assertRaises(DataValidationError, product.deserialize, data)
 
-    
     def test_deserialize_bad_available(self):
         """It should not deserialize a bad available attribute"""
         test_product = ProductFactory()
@@ -150,7 +150,6 @@ class TestProductModel(unittest.TestCase):
         data["available"] = "true"
         product = Product()
         self.assertRaises(DataValidationError, product.deserialize, data)
-
 
     def test_deserialize_bad_size(self):
         """It should not deserialize a bad size attribute"""
@@ -160,13 +159,18 @@ class TestProductModel(unittest.TestCase):
         product = Product()
         self.assertRaises(DataValidationError, product.deserialize, data)
 
-    
     def test_deserialize_invalid_attribute(self):
         """It should not deserialize invalid attribute"""
-        data = {"id": 1, "name": "shoes", "available": "true", "category": "FASHION", "color": "BLACK", "size": "L"}
+        data = {
+            "id": 1,
+            "name": "shoes",
+            "available": "true",
+            "category": "FASHION",
+            "color": "BLACK",
+            "size": "L",
+        }
         product = Product()
         self.assertRaises(DataValidationError, product.deserialize, data)
-
 
     def test_find_product(self):
         """It should Find a Product by ID"""
@@ -188,7 +192,6 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(product.create_date, products[1].create_date)
         self.assertEqual(product.last_modify_date, products[1].last_modify_date)
 
-
     def test_find_by_name(self):
         """It should Find a Product by Name"""
         products = ProductFactory.create_batch(10)
@@ -201,7 +204,6 @@ class TestProductModel(unittest.TestCase):
         for product in found:
             self.assertEqual(product.name, name)
 
-        
     def test_find_by_availability(self):
         """It should Find Products by Availability"""
         products = ProductFactory.create_batch(10)
@@ -214,7 +216,6 @@ class TestProductModel(unittest.TestCase):
         for product in found:
             self.assertEqual(product.available, available)
 
-    
     def test_find_by_color(self):
         """It should Find Products by Color"""
         products = ProductFactory.create_batch(10)
@@ -227,7 +228,6 @@ class TestProductModel(unittest.TestCase):
         for product in found:
             self.assertEqual(product.color, color)
 
-
     def test_find_by_category(self):
         """It should Find Products by Category"""
         products = ProductFactory.create_batch(10)
@@ -239,7 +239,6 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(found.count(), count)
         for product in found:
             self.assertEqual(product.category, category)
-
 
     def test_find_by_size(self):
         """It should Find Products by Size"""
@@ -259,26 +258,32 @@ class TestProductModel(unittest.TestCase):
         for product in products:
             product.create()
         create_date = products[0].create_date
-        count = len([product for product in products if product.create_date == create_date])
+        count = len(
+            [product for product in products if product.create_date == create_date]
+        )
         found = Product.find_by_create_date(create_date.isoformat())
         self.assertEqual(found.count(), count)
         for product in found:
             self.assertEqual(product.create_date, create_date)
 
-        
     def test_find_by_last_modify_date(self):
         """It should Find Products by Last Modify Date"""
         products = ProductFactory.create_batch(10)
         for product in products:
             product.create()
         last_modify_date = products[0].last_modify_date
-        count = len([product for product in products if product.last_modify_date == last_modify_date])
+        count = len(
+            [
+                product
+                for product in products
+                if product.last_modify_date == last_modify_date
+            ]
+        )
         found = Product.find_by_last_modify_date(last_modify_date.isoformat())
         self.assertEqual(found.count(), count)
         for product in found:
             self.assertEqual(product.last_modify_date, last_modify_date)
 
-    
     def test_find_or_404_not_found(self):
         """It should return 404 not found"""
         self.assertRaises(NotFound, Product.find_or_404, 0)

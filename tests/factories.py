@@ -32,10 +32,16 @@ class ProductFactory(factory.Factory):
 
     id = factory.Sequence(lambda n: n)
     name = FuzzyChoice(choices=["cheese", "shorts", "pot", "flowers"])
-    category = FuzzyChoice(choices=[Category.ACCESSORIES, Category.BEAUTY, Category.FASHION, Category.GROCERIES])
+    category = FuzzyChoice(
+        choices=[
+            Category.ACCESSORIES,
+            Category.BEAUTY,
+            Category.FASHION,
+            Category.GROCERIES,
+        ]
+    )
     available = FuzzyChoice(choices=[True, False])
     color = FuzzyChoice(choices=[Color.BLACK, Color.GREEN, Color.PINK, Color.BLUE])
     size = FuzzyChoice(choices=[Size.XS, Size.S, Size.M, Size.L, Size.XL])
     create_date = FuzzyDate(date(2008, 1, 1))
     last_modify_date = FuzzyDate(date(2009, 2, 2))
-
