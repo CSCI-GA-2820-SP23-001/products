@@ -78,6 +78,8 @@ class Category(Enum):
 
 # pylint: disable=too-many-instance-attributes
 class Product(db.Model):
+    """This class defines a product"""
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(63), nullable=False)
     available = db.Column(db.Boolean(), nullable=False, default=False)
@@ -90,7 +92,7 @@ class Product(db.Model):
     )
     size = db.Column(db.Enum(Size), nullable=False, server_default=(Size.UNKNOWN.name))
     create_date = db.Column(db.Date(), nullable=False, default=date.today())
-    makelast_modify_date = db.Column(db.Date(), nullable=False, default=date.today())
+    last_modify_date = db.Column(db.Date(), nullable=False, default=date.today())
 
     def __repr__(self):
         return f"<Product {self.name} id=[{self.id}]>"
