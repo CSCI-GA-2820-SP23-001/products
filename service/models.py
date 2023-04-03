@@ -17,15 +17,6 @@ All of the models are stored in this module
         "last_modify_date": 
     }
     
-    {
-  "name": "cheese",
-  "available": true,
-  "color": "YELLOW",
-  "size": "M",
-  "category": "GROCERIES",
-  "create_date": "2023-03-20",
-  "last_modify_date": "2023-03-20"
-}
 """
 
 
@@ -62,6 +53,7 @@ class Color(Enum):
     PINK = "pink"
     UNKNOWN = "unknown"
     OTHER = "other"
+
 
 class Size(Enum):
     """Enumeration of valid Product Sizes"""
@@ -111,8 +103,6 @@ class Product(db.Model):
     )
     create_date = db.Column(db.Date(), nullable=False, default = date.today())
     last_modify_date = db.Column(db.Date(), nullable=False, default = date.today())
-    
-    
 
     def __repr__(self):
         return f"<Product {self.name} id=[{self.id}]>"
