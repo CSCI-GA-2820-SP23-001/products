@@ -6,7 +6,7 @@ Describe what your service does here
 
 from flask import jsonify, request, url_for, abort
 from service.common import status  # HTTP Status Codes
-from service.models import Product
+from service.models import Product, Category
 
 # Import Flask application
 from . import app
@@ -125,18 +125,17 @@ def list_products():
     """Returns all of the Products"""
     app.logger.info("Request for product list")
     products = []
+
     category = request.args.get("category")
-    name = request.args.get("name")
     if category:
-        products = Product.find_by_category(category)
-    elif name:
-        products = Product.find_by_name(name)
+        products = Product.find_by_category(getattr(Category, category))
     else:
         products = Product.all()
 
     results = [product.serialize() for product in products]
     app.logger.info("Returning %d products", len(results))
     return jsonify(results), status.HTTP_200_OK
+
 
 ######################################################################
 # UPDATE A PRODUCT
