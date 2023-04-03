@@ -10,11 +10,19 @@ import logging
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
 
+
 from service import app
+from service.models import db, init_db, Product, Color, Size, Category
 from service.models import db, init_db, Product, Color, Size, Category
 from service.common import status  # HTTP Status Codes
 from tests.factories import ProductFactory
+from tests.factories import ProductFactory
 
+
+DATABASE_URI = os.getenv(
+    "DATABASE_URI", "postgresql://postgres:postgres@localhost:5432/testdb"
+)
+BASE_URL = "/products"
 
 DATABASE_URI = os.getenv(
     "DATABASE_URI", "postgresql://postgres:postgres@localhost:5432/testdb"
@@ -36,10 +44,17 @@ class TestProductServer(TestCase):
         app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
         app.logger.setLevel(logging.CRITICAL)
         init_db(app)
+        app.config["TESTING"] = True
+        app.config["DEBUG"] = False
+        # Set up the test database
+        app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
+        app.logger.setLevel(logging.CRITICAL)
+        init_db(app)
 
     @classmethod
     def tearDownClass(cls):
         """ This runs once after the entire test suite """
+        db.session.close()
         db.session.close()
 
     def setUp(self):
@@ -47,9 +62,28 @@ class TestProductServer(TestCase):
         self.client = app.test_client()
         db.session.query(Product).delete()  # clean up the last tests
         db.session.commit()
+        self.client = app.test_client()
+        db.session.query(Product).delete()  # clean up the last tests
+        db.session.commit()
 
     def tearDown(self):
         """ This runs after each test """
+        db.session.remove()
+
+    
+    def _create_products(self, count):
+        """Factory method to create products in bulk"""
+        products = []
+        for _ in range(count):
+            test_product = ProductFactory()
+            response = self.client.post(BASE_URL, json = test_product.serialize())
+            self.assertEqual(
+                response.status_code, status.HTTP_201_CREATED, "Could not create test product"
+            )
+            new_product = response.get_json()
+            test_product.id = new_product["id"]
+            products.append(test_product)
+        return products
         db.session.remove()
 
     
@@ -159,6 +193,23 @@ class TestProductServer(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         updated_product = response.get_json()
         self.assertEqual(updated_product["category"], "UNKNOWN")
+
+
+    def test_like_product(self):
+        """It should Like an existing Product"""
+        # create a product to like
+        test_product = ProductFactory()
+        response = self.client.post(BASE_URL, json = test_product.serialize())
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        # like the product
+        new_product = response.get_json()
+        logging.debug(new_product)
+        old_like = new_product["like"]
+        response = self.client.put(f"{BASE_URL}/like/{new_product['id']}", json=new_product)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        updated_product = response.get_json()
+        self.assertEqual(updated_product["like"], old_like + 1)
 
 
     def test_delete_product(self):

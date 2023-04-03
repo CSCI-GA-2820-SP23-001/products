@@ -17,6 +17,15 @@ All of the models are stored in this module
         "last_modify_date": 
     }
     
+    {
+  "name": "cheese",
+  "available": true,
+  "color": "YELLOW",
+  "size": "M",
+  "category": "GROCERIES",
+  "create_date": "2023-03-20",
+  "last_modify_date": "2023-03-20"
+}
 """
 
 
@@ -25,6 +34,7 @@ from enum import Enum
 from datetime import date
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
 
 logger = logging.getLogger("flask.app")
 
@@ -53,6 +63,7 @@ class Color(Enum):
     UNKNOWN = "unknown"
     OTHER = "other"
 
+
 class Size(Enum):
     """Enumeration of valid Product Sizes"""
     XS = "xs"
@@ -80,16 +91,16 @@ class Category(Enum):
 
 class Product(db.Model):
     """
-    Class that represents a YourResourceModel
+    Class that represents a ProductResourceModel
     """
-
     ##################################################
     # Table Schema
     ##################################################
-    
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(63), nullable=False)
     available = db.Column(db.Boolean(), nullable=False, default=False)
+    like = db.Column(db.Integer, nullable=False, default = 0)
     category = db.Column(
         db.Enum(Category), nullable=False, server_default=(Category.UNKNOWN.name)
     )
@@ -101,9 +112,8 @@ class Product(db.Model):
     )
     create_date = db.Column(db.Date(), nullable=False, default = date.today())
     last_modify_date = db.Column(db.Date(), nullable=False, default = date.today())
-
     
-
+    
 
     def __repr__(self):
         return f"<Product {self.name} id=[{self.id}]>"
@@ -135,6 +145,7 @@ class Product(db.Model):
             "id": self.id,
             "name": self.name,
             "available": self.available,
+            "like": self.like,
             "category": self.category.name,
             "color": self.color.name,  # convert enum to string
             "size": self.size.name,
@@ -151,7 +162,6 @@ class Product(db.Model):
         """
         try:
             self.name = data["name"]
-            #self.category = data["category"]
             if isinstance(data["available"], bool):
                 self.available = data["available"]
             else:
@@ -159,6 +169,7 @@ class Product(db.Model):
                     "Invalid type for boolean [available]: "
                     + str(type(data["available"]))
                 )
+            self.like = data["like"]
             self.color = getattr(Color, data["color"])  # create enum from string
             self.size = getattr(Size, data["size"])
             self.category = getattr(Category, data["category"])

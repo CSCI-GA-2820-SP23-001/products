@@ -22,6 +22,15 @@ def healthcheck():
 
 
 ######################################################################
+# GET HEALTH CHECK
+######################################################################
+@app.route("/healthcheck")
+def healthcheck():
+    """Let them know our heart is still beating"""
+    return jsonify(status=200, message="Healthy"), status.HTTP_200_OK
+
+
+######################################################################
 # GET INDEX
 ######################################################################
 @app.route("/")
@@ -146,6 +155,32 @@ def update_products(product_id):
     app.logger.info("Product with id [%s] updated.", product.id)
     return jsonify(message), status.HTTP_200_OK
 
+
+######################################################################
+# LIKE A PRODUCT
+######################################################################
+@app.route("/products/like/<int:product_id>", methods=["PUT"])
+def like_products(product_id):
+    """
+    Like an existing Product
+    This endpoint will update total likes of a Product
+    """
+    app.logger.info("Request to like product with id: %s", product_id)
+    check_content_type("application/json")
+
+    product = Product.find(product_id)
+    if not product:
+        abort(
+            status.HTTP_404_NOT_FOUND, f"Product with id '{product_id}' was not found."
+        )
+
+    product.like += 1
+    product.id = product_id
+    product.update()
+    message = product.serialize()
+
+    app.logger.info("Product with id [%s] liked.", product.id)
+    return jsonify(message), status.HTTP_200_OK
 
 
 ######################################################################
