@@ -37,6 +37,7 @@ GET `/`
 | list_products   | GET     | /products
 | update_products | PUT     | /products/{int:product_id}
 | delete_products | DELETE  | /products/{int:product_id}
+| like_products   | PUT     | /products/like/{int:product_id}
 
 
 ## Product Service APIs - Usage
