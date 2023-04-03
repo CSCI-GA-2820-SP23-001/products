@@ -143,6 +143,33 @@ def update_products(product_id):
 
 
 ######################################################################
+# LIKE A PRODUCT
+######################################################################
+@app.route("/products/like/<int:product_id>", methods=["PUT"])
+def like_products(product_id):
+    """
+    Like an existing Product
+    This endpoint will update total likes of a Product
+    """
+    app.logger.info("Request to like product with id: %s", product_id)
+    check_content_type("application/json")
+
+    product = Product.find(product_id)
+    if not product:
+        abort(
+            status.HTTP_404_NOT_FOUND, f"Product with id '{product_id}' was not found."
+        )
+
+    product.like += 1
+    product.id = product_id
+    product.update()
+    message = product.serialize()
+
+    app.logger.info("Product with id [%s] liked.", product.id)
+    return jsonify(message), status.HTTP_200_OK
+
+
+######################################################################
 #  U T I L I T Y   F U N C T I O N S
 ######################################################################
 def check_content_type(content_type):

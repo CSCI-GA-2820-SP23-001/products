@@ -41,6 +41,7 @@ class ProductFactory(factory.Factory):
         ]
     )
     available = FuzzyChoice(choices=[True, False])
+    like = factory.Sequence(lambda n: n)
     color = FuzzyChoice(choices=[Color.BLACK, Color.GREEN, Color.PINK, Color.BLUE])
     size = FuzzyChoice(choices=[Size.XS, Size.S, Size.M, Size.L, Size.XL])
     create_date = FuzzyDate(date(2008, 1, 1))

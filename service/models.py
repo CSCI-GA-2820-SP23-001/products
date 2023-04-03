@@ -8,7 +8,7 @@ from enum import Enum
 from datetime import date
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-
+from sqlalchemy import text
 
 logger = logging.getLogger("flask.app")
 
@@ -82,6 +82,7 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(63), nullable=False)
     available = db.Column(db.Boolean(), nullable=False, default=False)
+    like = db.Column(db.Integer, nullable=False, default = 0)
     category = db.Column(
         db.Enum(Category), nullable=False, server_default=(Category.UNKNOWN.name)
     )
@@ -128,6 +129,7 @@ class Product(db.Model):
             "id": self.id,
             "name": self.name,
             "available": self.available,
+            "like": self.like,
             "category": self.category.name,
             "color": self.color.name,  # convert enum to string
             "size": self.size.name,
@@ -152,6 +154,7 @@ class Product(db.Model):
                     "Invalid type for boolean [available]: "
                     + str(type(data["available"]))
                 )
+            self.like = data["like"]
             self.color = getattr(Color, data["color"])  # create enum from string
             self.size = getattr(Size, data["size"])
             self.category = getattr(Category, data["category"])

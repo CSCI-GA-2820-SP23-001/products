@@ -155,6 +155,24 @@ class TestProductServer(TestCase):
         updated_product = response.get_json()
         self.assertEqual(updated_product["category"], "UNKNOWN")
 
+
+    def test_like_product(self):
+        """It should Like an existing Product"""
+        # create a product to like
+        test_product = ProductFactory()
+        response = self.client.post(BASE_URL, json = test_product.serialize())
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        # like the product
+        new_product = response.get_json()
+        logging.debug(new_product)
+        old_like = new_product["like"]
+        response = self.client.put(f"{BASE_URL}/like/{new_product['id']}", json=new_product)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        updated_product = response.get_json()
+        self.assertEqual(updated_product["like"], old_like + 1)
+
+
     def test_delete_product(self):
         """It should Delete a Product"""
         test_product = self._create_products(1)[0]

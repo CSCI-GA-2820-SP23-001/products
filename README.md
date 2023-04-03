@@ -37,6 +37,7 @@ GET `/`
 | list_products   | GET     | /products
 | update_products | PUT     | /products/{int:product_id}
 | delete_products | DELETE  | /products/{int:product_id}
+| like_products   | PUT     | /products/like/{int:product_id}
 
 
 ## Product Service APIs - Usage
@@ -60,6 +61,7 @@ Request Body (JSON)
 {
   "name": "cheese",
   "available": true,
+  "like": 0,
   "color": "YELLOW",
   "size": "M",
   "category": "GROCERIES",
@@ -74,6 +76,7 @@ Success Response : `HTTP_201_CREATED`
   "available": true,
   "category": "GROCERIES",
   "color": "YELLOW",
+  "like": 0,
   "create_date": "2023-03-20",
   "id": 1023,
   "last_modify_date": "2023-03-20",
@@ -102,6 +105,7 @@ Success Response : `HTTP_200_OK`
   "available": true,
   "category": "GROCERIES",
   "color": "YELLOW",
+  "like": 0,
   "create_date": "2023-03-20",
   "id": 1023,
   "last_modify_date": "2023-03-20",
@@ -142,6 +146,7 @@ Success Response : `HTTP_200_OK`
     "color": "BLACK",
     "create_date": "2023-03-20",
     "id": 1024,
+    "like": 0,
     "last_modify_date": "2023-03-20",
     "name": "shoes",
     "size": "L"
@@ -150,6 +155,7 @@ Success Response : `HTTP_200_OK`
     "available": true,
     "category": "OTHER",
     "color": "PINK",
+    "like": 0,
     "create_date": "2023-03-20",
     "id": 1025,
     "last_modify_date": "2023-03-20",
@@ -160,6 +166,7 @@ Success Response : `HTTP_200_OK`
     "available": false,
     "category": "UNKNOWN",
     "color": "GREEN",
+    "like": 0,
     "create_date": "2011-10-15",
     "id": 1021,
     "last_modify_date": "2012-01-05",
@@ -202,7 +209,7 @@ Success Response : `HTTP_200_OK`
 {
   "available": true,
   "category": "GROCERIES",
-  "color": "WHITE",
+  "color": "YELLOW",
   "create_date": "2023-03-20",
   "id": 1023,
   "last_modify_date": "2023-03-20",
@@ -236,6 +243,61 @@ Deletes a Product with id
 Example:
 
 Success Response : `204 NO CONTENT`
+
+
+### Like a Product
+
+URL : `http://127.0.0.1:8000/products/like/{int:product_id}`
+
+Method : PUT
+
+Auth required : No
+
+Permissions required : None
+
+Updates a product with id provided in the URL according to the updated fields provided in the body
+
+Example:
+
+Request Body (JSON)
+```
+{
+  "name": "cheese",
+  "available": true,
+  "like": 0,
+  "color": "WHITE",
+  "size": "S",
+  "category": "GROCERIES",
+  "create_date": "2023-03-20",
+  "last_modify_date": "2023-03-20"
+}
+```
+
+
+Success Response : `HTTP_200_OK`
+```
+{
+  "available": true,
+  "category": "GROCERIES",
+  "color": "WHITE",
+  "like": 1,
+  "create_date": "2023-03-20",
+  "id": 1023,
+  "last_modify_date": "2023-03-20",
+  "name": "cheese",
+  "size": "S"
+}
+```
+
+Failure Response : `HTTP_404_NOT_FOUND`
+```
+{
+  "error": "Not Found",
+  "message": "404 Not Found: Product with id '1024' was not found.",
+  "status": 404
+}
+```
+
 
 ## Contents
 
