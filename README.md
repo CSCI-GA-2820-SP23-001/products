@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python](https://img.shields.io/badge/Language-Python-blue.svg)](https://python.org/)
 
-[![Build Status](https://github.com/CSCI-GA-2820-SP23-001/products/actions/workflows/workflow.yml/badge.svg)](https://github.com/CSCI-GA-2820-SP23-001/products/actions)
+[![Build Status](https://github.com/CSCI-GA-2820-SP23-001/products/actions/products/.github/workflows/tdd.yml/badge.svg)](https://github.com/CSCI-GA-2820-SP23-001/products/actions)
 
 Product Service - Representation of the products for a catalog where merchants can display and update product information.
 
