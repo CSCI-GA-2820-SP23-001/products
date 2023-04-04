@@ -26,7 +26,7 @@ def healthcheck():
 ######################################################################
 @app.route("/")
 def index():
-    """ Root URL response """
+    """Root URL response"""
     app.logger.info("Request for Root URL")
     return (
         jsonify(
@@ -36,7 +36,6 @@ def index():
         ),
         status.HTTP_200_OK,
     )
-
 
 
 ######################################################################
@@ -54,12 +53,10 @@ def create_products():
     product.deserialize(request.get_json())
     product.create()
     message = product.serialize()
-    location_url = url_for("get_products", product_id = product.id, _external = True)
+    location_url = url_for("get_products", product_id=product.id, _external=True)
 
     app.logger.info("Product with ID [%s] created.", product.id)
     return jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
-
-
 
 
 ######################################################################
@@ -83,7 +80,6 @@ def get_products(product_id):
     return jsonify(message), status.HTTP_200_OK
 
 
-
 ######################################################################
 # DELETE A PRODUCT
 ######################################################################
@@ -100,7 +96,6 @@ def delete_products(product_id):
         product.delete()
 
     return jsonify(message="success"), status.HTTP_204_NO_CONTENT
-
 
 
 ######################################################################
@@ -120,7 +115,22 @@ def delete_products(product_id):
 #     return response
 
 
-# Querying list 
+# Querying list
+# @app.route("/products", methods=["GET"])
+# def list_products():
+#     """
+#     Lists all products.
+#     This endpoint will list all the products.
+#     """
+#     app.logger.info("Request to list all products.")
+#     products = Product.all()
+#     results = [product.serialize() for product in products]
+#     app.logger.info(f"Returning {len(results)} products.")
+#     response = jsonify(results), status.HTTP_200_OK
+#     return response
+
+
+# Querying list
 @app.route("/products", methods=["GET"])
 def list_products():
     """Returns all of the Products"""
