@@ -4,6 +4,7 @@
 [![Python](https://img.shields.io/badge/Language-Python-blue.svg)](https://python.org/)
 
 [![Build Status](https://github.com/CSCI-GA-2820-SP23-001/products/actions/workflows/tdd.yml/badge.svg)](https://github.com/CSCI-GA-2820-SP23-001/products/actions)
+[![codecov](https://codecov.io/gh/CSCI-GA-2820-SP23-001/products/branch/master/graph/badge.svg?token=CUBFW8E2K8)](https://codecov.io/gh/CSCI-GA-2820-SP23-001/products)
 
 Product Service - Representation of the products for a catalog where merchants can display and update product information.
 
