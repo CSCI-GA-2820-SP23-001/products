@@ -11,12 +11,7 @@ from unittest import TestCase
 
 
 from service import app
-<<<<<<< HEAD
-from service.models import db, init_db, Product, Color, Size, Category
-from service.models import db, init_db, Product, Color, Size, Category
-=======
 from service.models import db, init_db, Product
->>>>>>> 3d3314916d4cfcdfaa6e4e8817176af46499dde5
 from service.common import status  # HTTP Status Codes
 from tests.factories import ProductFactory
 from tests.factories import ProductFactory
@@ -27,13 +22,6 @@ DATABASE_URI = os.getenv(
 )
 BASE_URL = "/products"
 
-<<<<<<< HEAD
-DATABASE_URI = os.getenv(
-    "DATABASE_URI", "postgresql://postgres:postgres@localhost:5432/testdb"
-)
-BASE_URL = "/products"
-=======
->>>>>>> 3d3314916d4cfcdfaa6e4e8817176af46499dde5
 
 ######################################################################
 #  T E S T   C A S E S
@@ -195,10 +183,6 @@ class TestProductServer(TestCase):
         updated_product = response.get_json()
         self.assertEqual(updated_product["category"], "UNKNOWN")
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 3d3314916d4cfcdfaa6e4e8817176af46499dde5
     def test_like_product(self):
         """It should Like an existing Product"""
         # create a product to like
@@ -217,10 +201,6 @@ class TestProductServer(TestCase):
         updated_product = response.get_json()
         self.assertEqual(updated_product["like"], old_like + 1)
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 3d3314916d4cfcdfaa6e4e8817176af46499dde5
     def test_delete_product(self):
         """It should Delete a Product"""
         test_product = self._create_products(1)[0]
