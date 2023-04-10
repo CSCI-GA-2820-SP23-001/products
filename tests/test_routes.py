@@ -14,7 +14,6 @@ from service import app
 from service.models import db, init_db, Product
 from service.common import status  # HTTP Status Codes
 from tests.factories import ProductFactory
-from tests.factories import ProductFactory
 
 
 DATABASE_URI = os.getenv(
@@ -79,27 +78,11 @@ class TestProductServer(TestCase):
             test_product.id = new_product["id"]
             products.append(test_product)
         return products
-        db.session.remove()
 
-    
-    def _create_products(self, count):
-        """Factory method to create products in bulk"""
-        products = []
-        for _ in range(count):
-            test_product = ProductFactory()
-            response = self.client.post(BASE_URL, json = test_product.serialize())
-            self.assertEqual(
-                response.status_code, status.HTTP_201_CREATED, "Could not create test product"
-            )
-            new_product = response.get_json()
-            test_product.id = new_product["id"]
-            products.append(test_product)
-        return products
 
     ######################################################################
     #  P L A C E   T E S T   C A S E S   H E R E
     ######################################################################
-
     def test_index(self):
         """It should call the home page"""
         resp = self.client.get("/")  # changed 'app' to client
@@ -226,10 +209,10 @@ class TestProductServer(TestCase):
         for product in data:
             self.assertEqual(product["category"], test_category)
 
+
     ######################################################################
     #  T E S T   S A D   P A T H S
     ######################################################################
-
     def test_create_pet_no_data(self):
         """It should not Create a Product with missing data"""
         response = self.client.post(BASE_URL, json={})
