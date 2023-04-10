@@ -212,7 +212,7 @@ class TestProductServer(TestCase):
     ######################################################################
     #  T E S T   S A D   P A T H S
     ######################################################################
-    
+
     def test_create_pet_no_data(self):
         """It should not Create a Product with missing data"""
         response = self.client.post(BASE_URL, json={})
