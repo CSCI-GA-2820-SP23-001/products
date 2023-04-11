@@ -79,10 +79,10 @@ class TestProductServer(TestCase):
             products.append(test_product)
         return products
 
-
     ######################################################################
     #  P L A C E   T E S T   C A S E S   H E R E
     ######################################################################
+
     def test_index(self):
         """It should call the home page"""
         resp = self.client.get("/")  # changed 'app' to client
@@ -209,10 +209,10 @@ class TestProductServer(TestCase):
         for product in data:
             self.assertEqual(product["category"], test_category)
 
-
     ######################################################################
     #  T E S T   S A D   P A T H S
     ######################################################################
+
     def test_create_pet_no_data(self):
         """It should not Create a Product with missing data"""
         response = self.client.post(BASE_URL, json={})
