@@ -74,7 +74,7 @@ login: ## Login to IBM Cloud using yur api key
 .PHONY: push
 image-push: ## Push to a Docker image registry
 	$(info Logging into IBM Cloud cluster $(CLUSTER)...)
-	docker push $(IMAGE)
+	docker push $(REGISTRY)/$(NAMESPACE)/$(IMAGE):$(IMAGE_TAG)
 
 .PHONY: deploy
 depoy: ## Deploy the service on local Kubernetes
