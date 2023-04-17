@@ -1,4 +1,11 @@
 # These can be overidden with env vars.
+REGISTRY ?= us.icr.io
+NAMESPACE ?= jenny-yq
+IMAGE_NAME ?= products
+IMAGE_TAG ?= 1.0
+IMAGE ?= $(REGISTRY)/$(NAMESPACE)/$(IMAGE_NAME):$(IMAGE_TAG)
+# PLATFORM ?= "linux/amd64,linux/arm64"
+PLATFORM ?= "linux/amd64"
 CLUSTER ?= nyu-devops
 
 .PHONY: help
@@ -51,6 +58,10 @@ cluster-rm: ## Remove a K3D Kubernetes cluster
 	$(info Removing Kubernetes cluster...)
 	k3d cluster delete
 
+############################################################
+# COMMANDS FOR DEPLOYING THE IMAGE
+############################################################
+
 .PHONY: login
 login: ## Login to IBM Cloud using yur api key
 	$(info Logging into IBM Cloud cluster $(CLUSTER)...)
@@ -60,8 +71,36 @@ login: ## Login to IBM Cloud using yur api key
 	ibmcloud ks workers --cluster $(CLUSTER)
 	kubectl cluster-info
 
+.PHONY: push
+image-push: ## Push to a Docker image registry
+	$(info Logging into IBM Cloud cluster $(CLUSTER)...)
+	docker push $(REGISTRY)/$(NAMESPACE)/$(IMAGE):$(IMAGE_TAG)
+
 .PHONY: deploy
 depoy: ## Deploy the service on local Kubernetes
 	$(info Deploying service locally...)
 	kubectl apply -f deploy/
 
+############################################################
+# COMMANDS FOR BUILDING THE IMAGE
+############################################################
+
+##@ Docker Build
+
+.PHONY: init
+init: export DOCKER_BUILDKIT=1
+init:	## Creates the buildx instance
+	$(info Initializing Builder...)
+	docker buildx create --use --name=qemu
+	docker buildx inspect --bootstrap
+
+.PHONY: build
+build:	## Build all of the project Docker images
+	$(info Building $(IMAGE) for $(PLATFORM)...)
+	docker buildx build --file Dockerfile  --pull --platform=$(PLATFORM) --tag $(IMAGE) --load .
+
+.PHONY: remove
+remove:	## Stop and remove the buildx builder
+	$(info Stopping and removing the builder image...)
+	docker buildx stop
+	docker buildx rm

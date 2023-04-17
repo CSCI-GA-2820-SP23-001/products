@@ -90,7 +90,7 @@ class Product(db.Model):
     color = db.Column(
         db.Enum(Color), nullable=False, server_default=(Color.UNKNOWN.name)
     )
-    size = db.Column(db.Enum(Size), nullable=False, server_default=(Size.UNKNOWN.name))
+    size = db.Column(db.Enum(Size), nullable=False, server_default=Size.UNKNOWN.name)
     create_date = db.Column(db.Date(), nullable=False, default=date.today())
     last_modify_date = db.Column(db.Date(), nullable=False, default=date.today())
 
