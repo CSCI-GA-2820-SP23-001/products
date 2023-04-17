@@ -13,12 +13,12 @@ from . import app
 
 
 ######################################################################
-# GET HEALTH CHECK
+# Health Endpoint
 ######################################################################
-@app.route("/healthcheck")
-def healthcheck():
-    """Let them know our heart is still beating"""
-    return jsonify(status=200, message="Healthy"), status.HTTP_200_OK
+@app.route("/health")
+def health():
+    """ Health check for Kubernetes"""
+    return jsonify({"status": "OK"}), status.HTTP_200_OK
 
 
 ######################################################################
