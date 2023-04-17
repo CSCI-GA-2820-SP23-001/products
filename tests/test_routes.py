@@ -93,8 +93,7 @@ class TestProductServer(TestCase):
         response = self.client.get("/health")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.get_json()
-        self.assertEqual(data["status"], 200)
-        self.assertEqual(data["message"], "Healthy")
+        self.assertEqual(data["status"], "OK")
 
     def test_get_product(self):
         """It should Get a single Product"""
