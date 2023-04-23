@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Product Demo RESTful Service</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="static/images/newapp-icon.png">
+    <link rel="stylesheet" href="static/css/cerulean_bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-header">
+          <h1>Product Demo REST API Service</h1>
+      </div>
+
+      <!-- Flash Message -->
+      <div class="table-responsive">
+        <table class="table">
+          <tr><td>Status:</td><td><span id="flash_message"></span></td></tr>
+        </table>
+      </div>
+
+      <!-- FORM -->
+      <div class="col-md-12" id="form_data">
+        <h3>Create, Retrieve, Update, and Delete a Product:</h3>
+        <div class="well">
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="product_id">Product ID:</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="product_id" placeholder="Enter ID of Product">
+              </div>
+              <div class="col-sm-4">
+                <button type="submit" class="btn btn-primary" id="retrieve-btn">Retrieve</button>
+                <button type="submit" class="btn btn-danger" id="delete-btn">Delete</button>
+              </div>
+            </div>
+          </div> <!-- form horizontal -->
+
+          <div class="form-horizontal">
+
+            <!-- NAME -->
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="product_name">Name:</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="product_name" placeholder="Enter name for Product">
+              </div>
+            </div>
+
+            <!-- CATEGORY -->
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="product_category">Category:</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="product_category">
+                  <option value="FASHION" selected>Fashion</option>
+                  <option value="ACCESSORIES">Accessories</option>
+                  <option value="GROCERIES">Groceries</option>
+                  <option value="DRUGS">Drugs</option>
+                  <option value="PETS">Pets</option>
+                  <option value="BEAUTY">Beauty</option>
+                  <option value="HOME">Home</option>
+                  <option value="DEVICE">Device</option>
+                  <option value="GAMING">Gaming</option>
+                  <option value="BOOK">Book</option>
+                  <option value="OTHER">Other</option>
+                  <option value="UNKNOWN">Unknown</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- AVAILABLE -->
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="product_available">Available:</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="product_available">
+                  <option value="true" selected>True</option>
+                  <option value="false">False</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- LIKE -->
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="product_like">Name:</label>
+              <div class="col-sm-10">
+                <input type="number" class="form-control" id="product_like" placeholder="Enter number of likes for Product">
+              </div>
+            </div>
+
+            <!-- COLOR -->
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="product_color">Color:</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="product_color">
+                  <option value="RED" selected>Red</option>
+                  <option value="YELLOW">Yellow</option>
+                  <option value="GREEN">Green</option>
+                  <option value="BLUE">Blue</option>
+                  <option value="BLACK">Black</option>
+                  <option value="WHITE">White</option>
+                  <option value="PINK">Pink</option>
+                  <option value="UNKNOWN">Unknown</option>
+                  <option value="OTHER">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- SIZE -->
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="product_size">Size:</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="product_size">
+                  <option value="XS" selected>XS</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="OTHER">Other</option>
+                  <option value="UNKNOWN">Unknown</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- CREATE DATE -->
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="product_create_date">Create Date:</label>
+              <div class="col-sm-10">
+                <input type="date" class="form-control" id="product_create_date" placeholder="2020-04-01">
+              </div>
+            </div>
+
+            <!-- LAST MODIFY DATE -->
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="product_last_modify_date">Last Modify Date:</label>
+              <div class="col-sm-10">
+                <input type="date" class="form-control" id="product_last_modify_date" placeholder="2020-04-01">
+              </div>
+            </div>
+
+            <!-- SUBMIT BUTTONS -->
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary" id="search-btn">Search</button>
+                <button type="submit" class="btn btn-primary" id="clear-btn">Clear</button>
+                <button type="submit" class="btn btn-success" id="create-btn">Create</button>
+                <button type="submit" class="btn btn-warning" id="update-btn">Update</button>
+              </div>
+            </div>
+          </div> <!-- form horizontal -->
+        </div> <!-- end well -->
+      </div> <!-- end Form -->
+
+      <!-- Search Results -->
+      <div class="table-responsive col-md-12" id="search_results">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th class="col-md-1">ID</th>
+            <th class="col-md-4">Name</th>
+            <th class="col-md-4">Category</th>
+            <th class="col-md-3">Available</th>
+            <th class="col-md-3">Like</th>
+            <th class="col-md-3">Color</th>
+            <th class="col-md-3">Size</th>
+            <th class="col-md-3">Create Date</th>
+            <th class="col-md-3">Last Modify Date</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+
+      <footer>
+        <br><br>
+        <p>&copy; NYU DevOps Company 2023</p>
+      </footer>
+
+    </div> <!-- container -->
+
+  <script type="text/javascript" src = "static/js/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src = "static/js/bootstrap.min.js"></script>
+
+  <!-- PRODUCT REST API -->
+  <script type="text/javascript" src="static/js/rest_api.js"></script>
+
+  </body>
+</html>
