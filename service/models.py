@@ -75,7 +75,6 @@ class Category(Enum):
     Class that represents a YourResourceModel
     """
 
-# pylint: disable=too-many-instance-attributes
 class Product(db.Model):
     """This class defines a product"""
 
