@@ -75,6 +75,7 @@ class Category(Enum):
     Class that represents a YourResourceModel
     """
 
+
 class Product(db.Model):
     """This class defines a product"""
 
