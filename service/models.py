@@ -70,7 +70,8 @@ class Category(Enum):
     ##################################################
     # Table Schema
     ##################################################
-    
+
+
 class Product(db.Model):
     """This class defines a product"""
 
