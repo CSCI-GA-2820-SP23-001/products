@@ -1,5 +1,5 @@
-# Image for a Python 3 development environment
-FROM rofrano/nyu-devops-base:sp23
+# This image has selenium and chrome driver already installed
+FROM rofrano/pipeline-selenium:lastest
 
 # Set up the Python development environment
 WORKDIR /app
