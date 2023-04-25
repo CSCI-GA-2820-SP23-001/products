@@ -13,7 +13,7 @@ from . import app
 
 
 ######################################################################
-# Health Endpoint
+# HEALTH CHECKPOINT
 ######################################################################
 @app.route("/health")
 def health():
@@ -27,15 +27,7 @@ def health():
 @app.route("/")
 def index():
     """Root URL response"""
-    app.logger.info("Request for Root URL")
-    return (
-        jsonify(
-            name="Product Demo REST API Service",
-            version="1.0",
-            paths=url_for("create_products", _external=True),
-        ),
-        status.HTTP_200_OK,
-    )
+    return app.send_static_file('index.html')
 
 
 ######################################################################
@@ -128,12 +120,24 @@ def list_products():
     app.logger.info("Request for product list")
     products = []
 
+    name = request.args.get("name")
     category = request.args.get("category")
-    if category:
-        products = Product.find_by_category(getattr(Category, category))
-    else:
-        products = Product.all()
+    available = request.args.get("available")
 
+    if name:
+        name_products = Product.find_by_name(name)
+    else:
+        name_products = Product.all()
+    if category:
+        category_products = Product.find_by_category(getattr(Category, category))
+    else:
+        category_products = Product.all()
+    if available:
+        available_products = Product.find_by_availability(available.lower() == "true")
+    else:
+        available_products = Product.all()
+
+    products = list(set(name_products).intersection(category_products, available_products))
     results = [product.serialize() for product in products]
     app.logger.info("Returning %d products", len(results))
     return jsonify(results), status.HTTP_200_OK
