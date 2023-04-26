@@ -84,12 +84,8 @@ class Product(db.Model):
     name = db.Column(db.String(63), nullable=False)
     available = db.Column(db.Boolean(), nullable=False, default=False)
     like = db.Column(db.Integer, nullable=False, default=0)
-    category = db.Column(
-        db.Enum(Category), nullable=False, server_default=(Category.UNKNOWN.name)
-    )
-    color = db.Column(
-        db.Enum(Color), nullable=False, server_default=(Color.UNKNOWN.name)
-    )
+    category = db.Column(db.Enum(Category), nullable=False, server_default=Category.UNKNOWN.name)
+    color = db.Column(db.Enum(Color), nullable=False, server_default=Color.UNKNOWN.name)
     size = db.Column(db.Enum(Size), nullable=False, server_default=Size.UNKNOWN.name)
     create_date = db.Column(db.Date(), nullable=False, default=date.today())
     last_modify_date = db.Column(db.Date(), nullable=False, default=date.today())
