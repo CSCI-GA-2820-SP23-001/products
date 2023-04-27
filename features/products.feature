@@ -54,5 +54,19 @@ Scenario: Create a Product
 
 Scenario: Like a Product
     When I visit the "home page"
-    And I 
+    And I set the "Name" to "Banana"
+    And I select "Groceries" in the "Category" dropdown
+    And I select "True" in the "Available" dropdown
+    And I set the "Like" to "3" 
+    And I select "Yellow" in the "Color" dropdown
+    And I select "S" in the "Size" dropdown
+    And I set the "Create_date" to "04-26-2023"
+    And I set the "Last_modify_date" to "04-26-2023" 
+    And I press the "Create" button
+    Then I should see the message "Success"
+    When I copy the "Id" field
+    And I paste the "Id" field
+    And I press the "Like" button
+    Then I should see the message "The product has been liked!"
+    And I should see "4" in the "Like" field
 
