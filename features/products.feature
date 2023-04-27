@@ -50,3 +50,4 @@ Scenario: Create a Product
     And I should see "L" in the "Size" dropdown
     And I should see "2023-04-25" in the "Create_date" field
     And I should see "2023-04-25" in the "Last_modify_date" field
+
