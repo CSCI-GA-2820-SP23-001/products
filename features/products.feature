@@ -50,3 +50,12 @@ Scenario: Create a Product
     And I should see "L" in the "Size" dropdown
     And I should see "2023-04-25" in the "Create_date" field
     And I should see "2023-04-25" in the "Last_modify_date" field
+
+
+Scenario: List all Products
+    When I visit the "Home Page"
+    And I press the "List" button
+    Then I should see the message "Success"
+    And I should see "candy" in the results
+    And I should see "milk" in the results
+    And I should not see "bear" in the results
