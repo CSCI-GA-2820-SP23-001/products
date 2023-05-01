@@ -50,3 +50,13 @@ Scenario: Create a Product
     And I should see "L" in the "Size" dropdown
     And I should see "2023-04-25" in the "Create_date" field
     And I should see "2023-04-25" in the "Last_modify_date" field
+
+    Scenario: Query by category
+    When I visit the "Home Page"
+    And I set the "Category" to "Groceries"
+    And I press the "Search" button
+    Then I should see the message "Success"
+    And I should see "milk" in the results
+    And I should see "candy" in the results
+    And I should not see "shorts" in the results
+    And I should not see "pot" in the results
