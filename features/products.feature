@@ -51,7 +51,8 @@ Scenario: Create a Product
     And I should see "2023-04-25" in the "Create_date" field
     And I should see "2023-04-25" in the "Last_modify_date" field
 
-    Scenario: Query by category
+
+Scenario: Query by category
     When I visit the "Home Page"
     And I select "Groceries" in the "Category" dropdown
     And I press the "Search" button
@@ -60,3 +61,24 @@ Scenario: Create a Product
     And I should see "candy" in the results
     And I should not see "shorts" in the results
     And I should not see "pot" in the results
+
+
+Scenario: Like a Product
+    When I visit the "home page"
+    And I set the "Name" to "Banana"
+    And I select "Groceries" in the "Category" dropdown
+    And I select "True" in the "Available" dropdown
+    And I set the "Like" to "3" 
+    And I select "Yellow" in the "Color" dropdown
+    And I select "S" in the "Size" dropdown
+    And I set the "Create_date" to "04-26-2023"
+    And I set the "Last_modify_date" to "04-26-2023" 
+    And I press the "Create" button
+    Then I should see the message "Success"
+    When I copy the "Id" field
+    And I paste the "Id" field
+    And I press the "Like" button
+    Then I should see the message "The product has been liked!"
+    And I should see "4" in the "Like" field
+
+
