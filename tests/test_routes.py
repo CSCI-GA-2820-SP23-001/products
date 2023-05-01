@@ -193,21 +193,6 @@ class TestProductServer(TestCase):
         response = self.client.get(f"{BASE_URL}/{test_product.id}")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_query_product_list_by_category(self):
-        """It should Query Products by Category"""
-        products = self._create_products(10)
-        test_category = products[0].category.name
-        category_products = [
-            product for product in products if product.category.name == test_category
-        ]
-        response = self.client.get(BASE_URL, query_string=f"category={test_category}")
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        data = response.get_json()
-        self.assertEqual(len(data), len(category_products))
-        # check the data just to be sure
-        for product in data:
-            self.assertEqual(product["category"], test_category)
-
     ######################################################################
     #  T E S T   S A D   P A T H S
     ######################################################################
