@@ -81,10 +81,9 @@ Scenario: List all Products
 
 Scenario: Search for milk
     When I visit the "Home Page"
-    And I set the "Name" to "milk"
+    And I set the "Name" to "dog"
     And I press the "Search" button
     Then I should see the message "Success"
-    And I should see "milk" in the results
+    And I should see "fido" in the results
     And I should not see "kitty" in the results
     And I should not see "leo" in the results
-
