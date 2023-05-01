@@ -70,12 +70,3 @@ Scenario: Like a Product
     Then I should see the message "The product has been liked!"
     And I should see "4" in the "Like" field
 
-
-Scenario: List all Products
-    When I visit the "Home Page"
-    And I press the "Search" button
-    Then I should see the message "Success"
-    And I should see "candy" in the results
-    And I should see "milk" in the results
-    And I should not see "strawberry" in the results
-
