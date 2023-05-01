@@ -54,7 +54,7 @@ Scenario: Create a Product
 
 Scenario: List all Products
     When I visit the "Home Page"
-    And I press the "List" button
+    And I press the "Search" button
     Then I should see the message "Success"
     And I should see "candy" in the results
     And I should see "milk" in the results
