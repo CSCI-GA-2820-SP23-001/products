@@ -58,4 +58,4 @@ Scenario: List all Products
     Then I should see the message "Success"
     And I should see "candy" in the results
     And I should see "milk" in the results
-    And I should not see "bear" in the results
+    And I should not see "strawberry" in the results
