@@ -244,20 +244,6 @@ $(function () {
         if (name) {
             queryString += 'name=' + name
         }
-        if (category) {
-            if (queryString.length > 0) {
-                queryString += '&category=' + category
-            } else {
-                queryString += 'category=' + category
-            }
-        }
-        if (available) {
-            if (queryString.length > 0) {
-                queryString += '&available=' + available
-            } else {
-                queryString += 'available=' + available
-            }
-        }
 
         $("#flash_message").empty();
 
