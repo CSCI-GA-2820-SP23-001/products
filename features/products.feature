@@ -79,3 +79,12 @@ Scenario: List all Products
     And I should see "milk" in the results
     And I should not see "strawberry" in the results
 
+Scenario: Search for milk
+    When I visit the "Home Page"
+    And I set the "Name" to "milk"
+    And I press the "Search" button
+    Then I should see the message "Success"
+    And I should see "milk" in the results
+    And I should not see "kitty" in the results
+    And I should not see "leo" in the results
+
