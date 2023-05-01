@@ -7,7 +7,7 @@ Describe what your service does here
 
 from flask import jsonify, request, url_for, abort
 from service.common import status  # HTTP Status Codes
-from service.models import Product, Category
+from service.models import Product
 
 # Import Flask application
 from . import app
