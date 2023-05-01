@@ -53,7 +53,7 @@ Scenario: Create a Product
 
     Scenario: Query by category
     When I visit the "Home Page"
-    And I set the "Category" to "Groceries"
+    And I select "Groceries" in the "Category" dropdown
     And I press the "Search" button
     Then I should see the message "Success"
     And I should see "milk" in the results
