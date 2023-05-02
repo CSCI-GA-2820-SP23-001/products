@@ -78,6 +78,7 @@ Scenario: List all Products
     And I should see "candy" in the results
     And I should see "milk" in the results
     And I should not see "strawberry" in the results
+    
 
 Scenario: Search for milk
     When I visit the "Home Page"
@@ -87,3 +88,4 @@ Scenario: Search for milk
     And I should see "milk" in the results
     And I should not see "kitty" in the results
     And I should not see "leo" in the results
+
