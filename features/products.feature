@@ -80,15 +80,42 @@ Scenario: List all Products
     And I should not see "strawberry" in the results
     
 
-Scenario: Search for milk
+Scenario: Retrieve (Read) products by id
     When I visit the "Home Page"
-    And I set the "Name" to "milk"
+    And I set the "Name" to "Tablet"
+    And I select "Device" in the "Category" dropdown
+    And I select "True" in the "Available" dropdown
+    And I set the "Like" to "6" 
+    And I select "Black" in the "Color" dropdown
+    And I select "S" in the "Size" dropdown
+    And I set the "Create_date" to "05-01-2023"
+    And I set the "Last_modify_date" to "05-01-2023"
+    And I press the "Create" button
+    Then I should see the message "Success"
+    When I copy the "Id" field
+    And I press the "Clear" button
+    Then the "Id" field should be empty
+    And the "Name" field should be empty
+    And the "Category" field should be empty
+    When I paste the "Id" field
+    And I press the "Retrieve" button
+    Then I should see the message "Success"
+    And I should see "Tablet" in the "Name" field
+    And I should see "6" in the "Like" field
+    And I should see "Device" in the "Category" dropdown
+    And I should see "True" in the "Available" dropdown
+    And I should see "Black" in the "Color" dropdown
+    And I should see "S" in the "Size" dropdown
+    And I should see "05-01-2023" in the "Create_date" field
+    And I should see "05-01-2023" in the "Last_modify_date" field
+
+
+Scenario: Read info based on Product ID
+    When I visit the "Home Page"
     And I press the "Search" button
     Then I should see the message "Success"
+    And I should see "candy" in the results
     And I should see "milk" in the results
-    And I should not see "kitty" in the results
-    And I should not see "leo" in the results
-
 
 Scenario: Update a Product
     When I visit the "Home Page"
