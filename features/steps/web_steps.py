@@ -154,3 +154,13 @@ def step_impl(context, text_string, element_name):
         )
     )
     expect(found).to_be(True)
+
+
+@when('I change "{element_name}" to "{text_string}"')
+def step_impl(context, element_name, text_string):
+    element_id = ID_PREFIX + element_name.lower().replace(' ', '_')
+    element = WebDriverWait(context.driver, context.WAIT_SECONDS).until(
+        expected_conditions.presence_of_element_located((By.ID, element_id))
+    )
+    element.clear()
+    element.send_keys(text_string)
